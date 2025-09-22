@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Aricita</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, #050510, #100520, #050510); /* Fondo más oscuro y con gradiente sutil */
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Estrellas fugaces de fondo - como la imagen 2 */
+        .shooting-stars-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+            border-radius: 50%;
+            transform: rotate(-45deg);
+            animation: shoot 8s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Brillo */
+        }
+
+        @keyframes shoot {
+            0% { transform: translate(-100vw, -100vh) rotate(-45deg); opacity: 0; }
+            5% { opacity: 1; }
+            10% { transform: translate(0vw, 0vh) rotate(-45deg); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Contenedor principal para los girasoles */
+        .sunflower-display {
+            position: relative;
+            bottom: 10%; /* Ajustar la posición vertical */
+            margin-bottom: 20px;
+            z-index: 3;
+            display: flex;
+            align-items: flex-end; /* Alinear los tallos en la base */
+            pointer-events: none;
+        }
+
+        .sunflower-plant {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px; /* Espacio entre girasoles */
+            animation: plant-sway 10s ease-in-out infinite alternate; /* Balanceo de la planta */
+            transform-origin: bottom center;
+        }
+
+        @keyframes plant-sway {
+            0% { transform: rotateZ(-2deg); }
+            100% { transform: rotateZ(2deg); }
+        }
+
+        .stem {
+            width: 8px;
+            height: 80px; /* Altura del tallo */
+            background-color: #6B8E23; /* Verde oliva */
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(107, 142, 35, 0.5); /* Brillo verde */
+            position: relative;
+            bottom: -5px; /* Para que parezca que sale un poco del suelo */
+        }
+
+        .leaf {
+            position: absolute;
+            width: 30px;
+            height: 20px;
+            background-color: #556B2F; /* Verde más oscuro */
+            border-radius: 0 50% 50% 0;
+            transform-origin: left center;
+            box-shadow: 0 0 5px rgba(85, 107, 47, 0.5);
+        }
+
+        .leaf.left { left: -25px; top: 30%; transform: rotate(-30deg); }
+        .leaf.right { right: -25px; top: 50%; transform: rotate(30deg); border-radius: 50% 0 0 50%; }
+
+        /* Girasoles individuales (la flor en sí) */
+        .sunflower-head {
+            width: 100px; /* Tamaño del girasol */
+            height: 100px;
+            background-color: #FFD700; /* Amarillo brillante */
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            margin-bottom: -10px; /* Para que se superponga un poco con el tallo */
+            box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.5) inset; /* Doble brillo */
+        }
+
+        .center-seed {
+            width: 40px;
+            height: 40px;
+            background-color: #8B4513; /* Marrón semillas */
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px rgba(139, 69, 19, 0.5);
+        }
+
+        /* Partículas brillantes que caen de los girasoles */
+        .sunflower-particle {
+            position: absolute;
+            background-color: rgba(255, 240, 150, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px 3px rgba(255, 255, 100, 0.8);
+            animation: flower-fall 3s linear forwards;
+            opacity: 0;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        @keyframes flower-fall {
+            0% { transform: translateY(0px) scale(0.8); opacity: 1; }
+            100% { transform: translateY(100px) scale(0.2); opacity: 0; }
+        }
+
+        /* Mensaje */
+        .message {
+            position: relative;
+            text-align: center;
+            padding: 25px 30px;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(20, 0, 40, 0.7));
+            border-radius: 15px;
+            margin-bottom: 30px;
+            z-index: 5;
+            animation: fadeInMessage 2.5s forwards;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #ffe680;
+            text-shadow: 0 0 15px rgba(255, 220, 100, 0.8), 0 0 5px rgba(255, 180, 0, 0.9);
+            border: 1px solid rgba(255, 220, 100, 0.4);
+        }
+
+        @keyframes fadeInMessage {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Media queries para adaptar a pantallas más pequeñas */
+        @media (max-width: 600px) {
+            .sunflower-head {
+                width: 80px;
+                height: 80px;
+            }
+            .stem {
+                height: 60px;
+            }
+            .message {
+                font-size: 1.2rem;
+                padding: 20px 25px;
+                margin-bottom: 20px;
+            }
+            .sunflower-plant {
+                margin: 0 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="shooting-stars-background"></div>
+
+    <div class="sunflower-display">
+        <div class="sunflower-plant">
+            <div class="sunflower-head">
+                <div class="center-seed"></div>
+            </div>
+            <div class="stem">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+        </div>
+        <div class="sunflower-plant" style="animation-delay: 2s; transform: scale(1.1);">
+            <div class="sunflower-head">
+                <div class="center-seed"></div>
+            </div>
+            <div class="stem">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+        </div>
+        <div class="sunflower-plant" style="animation-delay: 4s; transform: scale(0.9);">
+            <div class="sunflower-head">
+                <div class="center-seed"></div>
+            </div>
+            <div class="stem">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message">
+        <p>te amo demasiado mi Aricita, lo eres todo para mí❤️</p>
+    </div>
+
+    <script>
+        // Estrellas fugaces de fondo
+        const shootingStarsBackground = document.querySelector('.shooting-stars-background');
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 8}s`;
+            shootingStarsBackground.appendChild(star);
+            // Eliminar la estrella fugaz después de su animación para no sobrecargar el DOM
+            star.addEventListener('animationend', () => {
+                star.remove();
+            });
+        }
+        // Generar nuevas estrellas fugaces continuamente
+        setInterval(createShootingStar, 1000); // Crea una nueva estrella cada segundo
+
+
+        // Partículas brillantes que caen de los girasoles
+        const sunflowerHeads = document.querySelectorAll('.sunflower-head');
+        function createSunflowerParticle() {
+            // Elige un girasol al azar
+            const randomSunflower = sunflowerHeads[Math.floor(Math.random() * sunflowerHeads.length)];
+            const particle = document.createElement('div');
+            particle.className = 'sunflower-particle';
+
+            // Posicionar la partícula cerca de la cabeza del girasol
+            const rect = randomSunflower.getBoundingClientRect();
+            particle.style.left = `${rect.left + rect.width / 2 + (Math.random() * 40 - 20)}px`; // En el centro del girasol con variaciones
+            particle.style.top = `${rect.top + rect.height / 3 + (Math.random() * 10)}px`; // Desde un tercio superior de la flor
+            particle.style.width = `${Math.random() * 5 + 3}px`; // Tamaño de la partícula
+            particle.style.height = particle.style.width;
+            particle.style.animationDuration = `${Math.random() * 2 + 1.5}s`; // Duración de caída
+            document.body.appendChild(particle);
+
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        }
+
+        setInterval(createSunflowerParticle, 150); // Generar partículas más frecuentemente
+    </script>
+</body>
+</html>
